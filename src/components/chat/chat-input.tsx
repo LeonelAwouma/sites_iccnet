@@ -6,7 +6,6 @@ import { SendHorizonal, CornerDownLeft, Loader2 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
 import type { Entity } from '@/lib/types';
 
-
 interface ChatInputProps {
   isPending: boolean;
   selectedEntity: Entity;
@@ -26,26 +25,23 @@ function SubmitButton({ isPending }: { isPending: boolean }) {
 }
 
 export function ChatInput({ isPending, selectedEntity }: ChatInputProps) {
-  const formRef = useRef<HTMLFormElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    if (!isPending) {
-      formRef.current?.reset();
-      inputRef.current?.focus();
-       if (inputRef.current) {
-        inputRef.current.style.height = 'auto'; // Reset height
-      }
+    if (!isPending && inputRef.current) {
+      inputRef.current.form?.reset();
+      inputRef.current.focus();
+      inputRef.current.style.height = 'auto'; // Reset height
     }
   }, [isPending]);
   
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      if (!isPending && formRef.current) {
+      if (!isPending && inputRef.current?.form) {
         // Manually create and dispatch a submit event
         const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-        formRef.current.dispatchEvent(submitEvent);
+        inputRef.current.form.dispatchEvent(submitEvent);
       }
     }
   };
@@ -57,7 +53,7 @@ export function ChatInput({ isPending, selectedEntity }: ChatInputProps) {
   };
 
   return (
-    <div className="p-4 border-t bg-background shrink-0" ref={formRef as any}>
+    <div className="p-4 border-t bg-background shrink-0">
       <input type="hidden" name="entity" value={selectedEntity} />
       <div className="relative">
         <Textarea
