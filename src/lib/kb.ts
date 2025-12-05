@@ -11,12 +11,7 @@ Services principaux:
 - Développement de logiciels: Conception et réalisation de logiciels métiers pour optimiser les processus internes des entreprises.
 - Applications Web et Mobiles: Création d'applications modernes, ergonomiques et performantes pour les plateformes web et mobiles (iOS, Android).
 - Maintenance et support: Accompagnement des clients après le déploiement avec des services de maintenance évolutive et corrective.`,
-  'New Telnet': `Newtelnet (ou NEWTELNET CAMEROUN SAS) est un spécialiste des solutions Informatiques et Télécoms pour les entreprises, axé sur la Connectivité, la Sécurité et l’Optimisation.
-Services principaux:
-- Solutions de connectivité: Met en place des réseaux de communication dédiés et haut débit pour garantir une connectivité fluide et sécurisée.
-- Sécurité des réseaux: Offre des solutions de sécurité avancées pour protéger les données sensibles contre les cybermenaces.
-- Optimisation d'infrastructure: Gère et surveille les réseaux de manière proactive pour maximiser l'efficacité des opérations.
-Newtelnet possède une expertise adaptée à des secteurs variés, notamment la Banque & Assurance, la Logistique & Transport, l'Industrie & BTP, l'Agro-alimentaire, et le secteur Pétrolier & Gazier.`,
+  'New Telnet': `Newtelnet, ou NEWTELNET CAMEROUN SAS, est un fournisseur d'accès internet (FAI) et opérateur spécialisé dans les services informatiques et télécoms à valeur ajoutée. Fondée en avril 2017 et opérationnelle depuis mi-2021, l'entreprise vise à rendre l'accès à internet fluide et permanent au Cameroun et en Afrique centrale, avec pour slogan "Unbreakable Internet Solutions". Elle fournit des solutions de connectivité, sécurité et optimisation pour les entreprises de divers secteurs (banque, logistique, industrie, etc.).`,
   'ADAC': `ADAC (Africa Datacenter) est une entité du Groupe ICC Net spécialisée dans l'hébergement d'infrastructures informatiques et les services de data center.
 Services principaux:
 - Colocation: Espaces sécurisés et climatisés pour héberger les serveurs des clients.
