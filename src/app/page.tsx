@@ -17,27 +17,38 @@ const initialState: ChatState = {
 
 export default function Home() {
   const { toast } = useToast();
-  const [state, formAction] = useActionState(sendMessage, initialState);
-  const [isPending, startTransition] = useTransition();
+  const [state, formAction, isPending] = useActionState(sendMessage, initialState);
   const [selectedEntity, setSelectedEntity] = useState<Entity>('Groupe ICC Net');
 
-  const initialMessages = [
+  // We need a separate state for messages derived from the action state
+  // to properly handle resets when the entity changes.
+  const [displayMessages, setDisplayMessages] = useState(initialState.messages);
+
+  const createInitialMessage = (entity: Entity) => [
     {
       id: 'init',
       role: 'assistant' as const,
-      content:
-        `Bonjour! Je suis l'assistant virtuel de ${selectedEntity}. Comment puis-je vous aider aujourd'hui?`,
+      content: `Bonjour! Je suis l'assistant virtuel de ${entity}. Comment puis-je vous aider aujourd'hui?`,
     },
   ];
 
-  const chatState = state.messages.length > 0 ? state : { ...initialState, messages: initialMessages };
+  useEffect(() => {
+    // When the entity changes, reset the chat and show the initial message for the new entity.
+    setDisplayMessages(createInitialMessage(selectedEntity));
+    // We also need to reset the action state, but useActionState doesn't have a built-in reset.
+    // The best way to signal a "reset" to the action is to handle it on the next message send.
+  }, [selectedEntity]);
 
-   useEffect(() => {
-    // When selectedEntity changes, we want to reset the chat.
-    // We can do this by updating the state's messages.
-    // A more robust solution might involve a key on the chat components or a dedicated reset action.
-    state.messages = [];
-  }, [selectedEntity, state]);
+  useEffect(() => {
+    // When the action state updates with new messages, update our display messages.
+    // Don't update if it's the initial empty state.
+    if (state.messages.length > 0) {
+      setDisplayMessages(state.messages);
+    } else {
+       // This handles the case where the state is reset after an entity change.
+       setDisplayMessages(createInitialMessage(selectedEntity));
+    }
+  }, [state.messages]);
 
 
   useEffect(() => {
@@ -48,7 +59,8 @@ export default function Home() {
         description: state.error,
       });
     }
-  }, [state, toast]);
+  }, [state.error, toast]);
+
 
   return (
     <SidebarProvider>
@@ -58,15 +70,14 @@ export default function Home() {
       />
       <SidebarInset className="h-svh flex flex-col">
         <form
-          action={(formData) => {
-            startTransition(() => {
-              formAction(formData);
-            });
-          }}
+          action={formAction}
+          // Using a key that changes with the entity will force React to re-create
+          // the form, ensuring the action state is reset correctly on entity change.
+          key={selectedEntity}
           className="flex flex-col h-full overflow-hidden"
         >
           <ChatHeader selectedEntity={selectedEntity} />
-          <ChatMessages messages={chatState.messages} />
+          <ChatMessages messages={displayMessages} />
           <ChatInput isPending={isPending} selectedEntity={selectedEntity} />
         </form>
       </SidebarInset>
