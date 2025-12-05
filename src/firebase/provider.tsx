@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, ReactNode, useMemo } from 'react';
+import { createContext, useContext, ReactNode, useMemo, useState, useEffect } from 'react';
 import type { FirebaseApp } from 'firebase/app';
 import type { Auth } from 'firebase/auth';
 import type { Firestore } from 'firebase/firestore';
@@ -8,9 +8,9 @@ import { FirebaseClientProvider } from './client-provider';
 import { initializeFirebase } from '.';
 
 type FirebaseContextValue = {
-  firebaseApp: FirebaseApp;
-  auth: Auth;
-  firestore: Firestore;
+  firebaseApp?: FirebaseApp;
+  auth?: Auth;
+  firestore?: Firestore;
 };
 
 const FirebaseContext = createContext<FirebaseContextValue | undefined>(
@@ -18,26 +18,36 @@ const FirebaseContext = createContext<FirebaseContextValue | undefined>(
 );
 
 export function FirebaseProvider({ children }: { children: ReactNode }) {
-  const { firebaseApp, auth, firestore } = useMemo(
-    () => initializeFirebase(),
-    []
-  );
+  const [firebase, setFirebase] = useState<FirebaseContextValue | null>(null);
 
-  const contextValue = useMemo(
-    () => ({
-      firebaseApp,
-      auth,
-      firestore,
-    }),
-    [firebaseApp, auth, firestore]
-  );
+  useEffect(() => {
+    // Initialize Firebase only on the client-side
+    if (typeof window !== 'undefined') {
+      const { firebaseApp, auth, firestore } = initializeFirebase();
+      setFirebase({ firebaseApp, auth, firestore });
+    }
+  }, []);
+
+  const contextValue = useMemo(() => {
+    if (!firebase) return {};
+    return {
+      firebaseApp: firebase.firebaseApp,
+      auth: firebase.auth,
+      firestore: firebase.firestore,
+    };
+  }, [firebase]);
+
+  if (!firebase) {
+    // You can return a loader here if you want
+    return <>{children}</>;
+  }
 
   return (
     <FirebaseContext.Provider value={contextValue}>
       <FirebaseClientProvider
-        firebaseApp={firebaseApp}
-        auth={auth}
-        firestore={firestore}
+        firebaseApp={firebase.firebaseApp!}
+        auth={firebase.auth!}
+        firestore={firebase.firestore!}
       >
         {children}
       </FirebaseClientProvider>
@@ -53,6 +63,6 @@ export const useFirebase = () => {
   return context;
 };
 
-export const useFirebaseApp = () => useFirebase().firebaseApp;
-export const useFirestore = () => useFirebase().firestore;
-export const useAuth = () => useFirebase().auth;
+export const useFirebaseApp = () => useFirebase()?.firebaseApp;
+export const useFirestore = () => useFirebase()?.firestore;
+export const useAuth = () => useFirebase()?.auth;
