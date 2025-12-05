@@ -16,16 +16,17 @@ Services principaux:
 - Accès Internet Très Haut Débit: Connexion via Fibre Optique, Faisceau Hertzien et VSAT.
 - Téléphonie sur IP (VoIP): Solutions de communication unifiée pour réduire les coûts de télécommunication.
 - Réseaux d'entreprise: Déploiement et gestion de réseaux locaux (LAN) et étendus (WAN).`,
-  ADAC: `L'Association Des Assureurs du Cameroun (ADAC) a pour mission de représenter et de défendre les intérêts de l'ensemble des compagnies d'assurances et de réassurance opérant au Cameroun.
-Missions principales:
-- Promotion du secteur: Œuvrer au développement du marché de l'assurance au Cameroun.
-- Défense des intérêts: Représenter la profession auprès des pouvoirs publics et des instances internationales.
-- Éthique et déontologie: Veiller au respect des bonnes pratiques professionnelles et à la protection des assurés.`,
+  'ADAC': `ADAC (Africa Datacenter) est une entité du Groupe ICC Net spécialisée dans l'hébergement d'infrastructures informatiques et les services de data center.
+Services principaux:
+- Colocation: Espaces sécurisés et climatisés pour héberger les serveurs des clients.
+- Cloud Computing: Solutions de cloud privé et public pour une flexibilité et une scalabilité maximales.
+- Sécurité et connectivité: Garantie d'une haute disponibilité et d'une sécurité physique et logique des données.`,
   'Groupe ICC Net': `Le Groupe ICC NET est un acteur majeur de la transformation digitale au Cameroun depuis plus de 15 ans. Il fédère plusieurs entités spécialisées pour offrir une gamme complète de services.
 Entités du groupe:
 - Matrix Telecoms: Solutions de connectivité et télécoms.
 - ICC SOFT: Ingénierie logicielle et développement sur mesure.
 - Newtelnet: Fournisseur d'accès Internet et services VoIP.
+- ADAC: Hébergement et services de data center.
 - LVB & Perle: Branches offrant des services généraux et des solutions personnalisées.`,
   LVB: `LVB est une branche du Groupe ICC Net qui offre une gamme variée de services généraux aux entreprises. Notre objectif est de fournir un support complet pour aider nos clients à se concentrer sur leur cœur de métier.`,
   Perle: `Perle est une autre entité du Groupe ICC Net, spécialisée dans des solutions d'entreprise personnalisées. Nous nous engageons à fournir l'excellence et l'innovation dans tous nos projets.`,

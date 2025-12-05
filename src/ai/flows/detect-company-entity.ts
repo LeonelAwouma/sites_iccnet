@@ -31,7 +31,7 @@ const prompt = ai.definePrompt({
   name: 'detectCompanyEntityPrompt',
   input: {schema: DetectCompanyEntityInputSchema},
   output: {schema: DetectCompanyEntityOutputSchema},
-  prompt: `Determine which company entity the following text is most relevant to. The possible entities are: Matrix Telecoms, LVB, Perle, ICC SOFT, New Telnet, ADAC, Groupe ICC Net. Return ONLY the name of the entity.
+  prompt: `Determine which company entity the following text is most relevant to. The possible entities are: Matrix Telecoms, LVB, Perle, ICC SOFT, New Telnet, ADAC (which stands for Africa Datacenter), Groupe ICC Net. Return ONLY the name of the entity.
 
 If the query is general or mentions the group, prefer "Groupe ICC Net".
 

@@ -52,7 +52,7 @@ export const entities: {
   },
   {
     name: 'ADAC',
-    description: 'Insurance Association',
+    description: 'Africa Datacenter',
     icon: AdacIcon,
   },
   {
