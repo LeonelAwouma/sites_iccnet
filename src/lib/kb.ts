@@ -1,0 +1,11 @@
+import type { Entity } from './types';
+
+export const knowledgeBase: Record<Entity, string> = {
+  Matrix: `Matrix Télécoms est un opérateur de télécommunications qui fournit des solutions de connectivité Internet et d’interconnexion de sites aux entreprises. Nous offrons des services fiables et performants pour garantir que votre entreprise reste connectée en permanence. Nos solutions incluent la fibre optique, les liaisons sans fil et les VPN sécurisés.`,
+  'ICC SOFT': `ICC-soft, une branche de GROUPE ICC NET, est une société de services et d’ingénierie informatique spécialisée dans le développement de logiciels sur mesure, d’applications web et mobiles. Nous accompagnons nos clients de la conception à la maintenance, en passant par le développement et le déploiement de solutions innovantes et robustes.`,
+  Newtelnet: `Newtelnet est un fournisseur d’accès Internet au Cameroun, proposant des solutions Internet Très Haut Débit par Fibre Optique, Faisceau Hertzien et VSAT. Nous offrons également des services de téléphonie sur IP (VoIP) et des solutions de réseau d'entreprise pour répondre à tous vos besoins de communication.`,
+  ADAC: `L’Association Des Assureurs du Cameroun (ADAC) est l’organe représentatif de l’ensemble des compagnies d’assurances et de réassurance exerçant au Cameroun. Sa mission est de promouvoir le secteur de l'assurance, de défendre les intérêts de ses membres et de veiller au respect des bonnes pratiques professionnelles.`,
+  LVB: `LVB est une branche du Groupe ICC Net qui offre une gamme variée de services généraux aux entreprises. Notre objectif est de fournir un support complet pour aider nos clients à se concentrer sur leur cœur de métier.`,
+  Perle: `Perle est une autre entité du Groupe ICC Net, spécialisée dans des solutions d'entreprise personnalisées. Nous nous engageons à fournir l'excellence et l'innovation dans tous nos projets.`,
+  Unknown: `Le Groupe ICC NET, avec plus de 15 années d’expérience, est le partenaire de confiance des entreprises camerounaises pour leur transformation digitale. Nous regroupons plusieurs entités spécialisées comme Matrix, ICC SOFT et Newtelnet pour offrir une gamme complète de services informatiques et télécoms.`,
+};
