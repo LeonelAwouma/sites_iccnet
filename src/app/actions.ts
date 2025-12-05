@@ -15,20 +15,24 @@ export async function sendMessage(
   formData: FormData
 ): Promise<ChatState> {
   const userInput = formData.get('message') as string;
-  if (!userInput?.trim()) {
+  const file = formData.get('file');
+
+  if (!userInput?.trim() && !file) {
     return state;
   }
+
+  const userMessageContent = userInput + (file ? `\nFichier: ${(file as File).name}` : '');
 
   const userMessage: Message = {
     id: crypto.randomUUID(),
     role: 'user',
-    content: userInput,
+    content: userMessageContent,
   };
 
   const messagesWithUser = [...state.messages, userMessage];
 
   try {
-    const { entity } = await detectCompanyEntity({ text: userInput });
+    const { entity } = await detectCompanyEntity({ text: userMessageContent });
 
     const retrievedContent = knowledgeBase[entity] || knowledgeBase['Unknown'];
 
@@ -46,7 +50,7 @@ export async function sendMessage(
 
     const { response } = await generateContextualResponse({
       entity: entity,
-      query: userInput,
+      query: userMessageContent,
       retrievedContent: retrievedContent,
     });
 
