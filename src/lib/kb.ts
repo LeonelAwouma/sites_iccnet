@@ -1,18 +1,13 @@
 import type { Entity } from './types';
 
 export const knowledgeBase: Record<Entity, string> = {
-  'Matrix Telecoms': `Matrix Télécoms est un opérateur de télécommunications spécialisé dans les solutions de connectivité pour les entreprises.
-Services principaux:
-- Connectivité Internet: Fibre optique, liaisons sans fil (Faisceau Hertzien), et VSAT pour une connexion fiable et performante.
-- Interconnexion de sites: Solutions VPN (Virtual Private Network) pour connecter de manière sécurisée plusieurs sites distants.
-- Solutions sur mesure: Conception d'architectures réseau adaptées aux besoins spécifiques de chaque entreprise pour garantir la continuité des opérations.`,
+  'Matrix Telecoms': `Matrix Telecoms S.A., une filiale du Groupe ICCNET fondée en 1997, est un opérateur télécoms majeur au Cameroun spécialisé dans les services IP (Internet Protocol) pour les entreprises. Avec le slogan "Connecting People. Inspiring Solutions.", l'entreprise offre une gamme complète de services incluant la connectivité internet dédiée, les réseaux privés virtuels (VPN), la téléphonie sur IP (VoIP), et des solutions de sécurité comme la vidéosurveillance et l'hébergement en datacenter. Elle dessert les entreprises privées, publiques et les organisations internationales depuis ses bureaux à Yaoundé et Douala.`,
   'ICC SOFT': `ICC-soft est la branche de développement logiciel du Groupe ICC Net. Elle est spécialisée dans la création de solutions informatiques sur mesure.
 Services principaux:
 - Développement de logiciels: Conception et réalisation de logiciels métiers pour optimiser les processus internes des entreprises.
 - Applications Web et Mobiles: Création d'applications modernes, ergonomiques et performantes pour les plateformes web et mobiles (iOS, Android).
 - Maintenance et support: Accompagnement des clients après le déploiement avec des services de maintenance évolutive et corrective.`,
-  'New Telnet': `Newtelnet, ou NEWTELNET CAMEROUN SAS, est un fournisseur d'accès internet (FAI) et opérateur camerounais spécialisé dans les services informatiques et télécoms à valeur ajoutée. Fondée en avril 2017 et opérationnelle depuis mi-2021, l'entreprise vise à rendre l'accès à internet fluide et permanent au Cameroun et en Afrique centrale, avec pour slogan "Unbreakable Internet Solutions".
-Ses services principaux couvrent la connectivité réseau (VSAT, fibre optique, SD-WAN), la cybersécurité (en partenariat avec des acteurs comme Check Point) et l'optimisation des infrastructures IT. L'entreprise s'adresse à des secteurs variés comme la banque, la logistique, l'industrie et le BTP.`,
+  'New Telnet': `Newtelnet, ou NEWTELNET CAMEROUN SAS, est un fournisseur d'accès internet (FAI) et opérateur camerounais spécialisé dans les services informatiques et télécoms à valeur ajoutée. Fondée en avril 2017 et opérationnelle depuis mi-2021, l'entreprise vise à rendre l'accès à internet fluide et permanent au Cameroun et en Afrique centrale, avec pour slogan "Unbreakable Internet Solutions". Ses services principaux couvrent la connectivité réseau (VSAT, fibre optique, SD-WAN), la cybersécurité (en partenariat avec des acteurs comme Check Point) et l'optimisation des infrastructures IT. L'entreprise s'adresse à des secteurs variés comme la banque, la logistique, l'industrie et le BTP.`,
   'ADAC': `ADAC (Africa Datacenter) est une entité du Groupe ICC Net spécialisée dans l'hébergement d'infrastructures informatiques et les services de data center.
 Services principaux:
 - Colocation: Espaces sécurisés et climatisés pour héberger les serveurs des clients.
