@@ -15,13 +15,12 @@ export async function sendMessage(
   formData: FormData
 ): Promise<ChatState> {
   const userInput = formData.get('message') as string;
-  const file = formData.get('file');
 
-  if (!userInput?.trim() && !file) {
+  if (!userInput?.trim()) {
     return state;
   }
 
-  const userMessageContent = userInput + (file ? `\nFichier: ${(file as File).name}` : '');
+  const userMessageContent = userInput;
 
   const userMessage: Message = {
     id: crypto.randomUUID(),
