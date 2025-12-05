@@ -34,7 +34,7 @@ export async function sendMessage(
   try {
     const { entity } = await detectCompanyEntity({ text: userMessageContent });
 
-    const retrievedContent = knowledgeBase[entity] || knowledgeBase['Unknown'];
+    const retrievedContent = knowledgeBase[entity] || knowledgeBase['Groupe ICC Net'];
 
     if (!retrievedContent) {
       const errorMessage: Message = {

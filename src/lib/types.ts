@@ -6,6 +6,7 @@ import {
   AdacIcon,
   LvbIcon,
   PerleIcon,
+  Logo,
 } from '@/components/icons';
 
 export type Message = {
@@ -15,12 +16,13 @@ export type Message = {
 };
 
 export type Entity =
-  | 'Matrix'
+  | 'Matrix Telecoms'
   | 'LVB'
   | 'Perle'
   | 'ICC SOFT'
-  | 'Newtelnet'
+  | 'New Telnet'
   | 'ADAC'
+  | 'Groupe ICC Net'
   | 'Unknown';
 
 export const entities: {
@@ -29,7 +31,12 @@ export const entities: {
   icon: React.ElementType;
 }[] = [
   {
-    name: 'Matrix',
+    name: 'Groupe ICC Net',
+    description: 'Holding & Services IT',
+    icon: Logo,
+  },
+  {
+    name: 'Matrix Telecoms',
     description: 'Telecom & Connectivity',
     icon: MatrixIcon,
   },
@@ -39,7 +46,7 @@ export const entities: {
     icon: IccSoftIcon,
   },
   {
-    name: 'Newtelnet',
+    name: 'New Telnet',
     description: 'Internet & Telephony',
     icon: NewtelnetIcon,
   },
