@@ -2,49 +2,63 @@
 
 import { Textarea } from '@/components/ui/textarea';
 import { Button } from '@/components/ui/button';
-import { SendHorizonal, CornerDownLeft } from 'lucide-react';
-import { useFormStatus } from 'react-dom';
+import { SendHorizonal, CornerDownLeft, Loader2 } from 'lucide-react';
 import { useRef, useEffect } from 'react';
+import type { Entity } from '@/lib/types';
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
+
+interface ChatInputProps {
+  isPending: boolean;
+  selectedEntity: Entity;
+}
+
+function SubmitButton({ isPending }: { isPending: boolean }) {
   return (
     <Button
       type="submit"
       size="icon"
-      disabled={pending}
+      disabled={isPending}
       aria-label="Send message"
     >
-      <SendHorizonal />
+      {isPending ? <Loader2 className="animate-spin" /> : <SendHorizonal />}
     </Button>
   );
 }
 
-export function ChatInput() {
-  const { pending } = useFormStatus();
+export function ChatInput({ isPending, selectedEntity }: ChatInputProps) {
   const formRef = useRef<HTMLFormElement | null>(null);
   const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
-    if (formRef.current && !pending) {
-      formRef.current.reset();
+    if (!isPending) {
+      formRef.current?.reset();
       inputRef.current?.focus();
+       if (inputRef.current) {
+        inputRef.current.style.height = 'auto'; // Reset height
+      }
     }
-  }, [pending]);
+  }, [isPending]);
   
   const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
       event.preventDefault();
-      const form = (event.target as HTMLElement).closest('form');
-      if (form) {
+      if (!isPending && formRef.current) {
+        // Manually create and dispatch a submit event
         const submitEvent = new Event('submit', { bubbles: true, cancelable: true });
-        form.dispatchEvent(submitEvent);
+        formRef.current.dispatchEvent(submitEvent);
       }
     }
   };
 
+  const handleInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
+    const target = e.currentTarget;
+    target.style.height = 'auto';
+    target.style.height = `${target.scrollHeight}px`;
+  };
+
   return (
-    <div className="p-4 border-t bg-background shrink-0">
+    <div className="p-4 border-t bg-background shrink-0" ref={formRef as any}>
+      <input type="hidden" name="entity" value={selectedEntity} />
       <div className="relative">
         <Textarea
           ref={inputRef}
@@ -53,18 +67,14 @@ export function ChatInput() {
           className="pr-28 min-h-[40px] resize-none leading-6"
           rows={1}
           onKeyDown={handleKeyDown}
-          disabled={pending}
-          onInput={(e) => {
-            const target = e.currentTarget;
-            target.style.height = 'auto';
-            target.style.height = `${target.scrollHeight}px`;
-          }}
+          onInput={handleInput}
+          disabled={isPending}
         />
         <div className="absolute top-1/2 right-3 -translate-y-1/2 flex items-center gap-2">
           <kbd className="hidden lg:inline-flex items-center gap-1 text-xs text-muted-foreground">
             <CornerDownLeft size={14} /> Entrée
           </kbd>
-          <SubmitButton />
+          <SubmitButton isPending={isPending} />
         </div>
       </div>
     </div>

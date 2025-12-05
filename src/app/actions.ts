@@ -3,7 +3,7 @@
 import { detectCompanyEntity } from '@/ai/flows/detect-company-entity';
 import { generateContextualResponse } from '@/ai/flows/generate-contextual-response';
 import { knowledgeBase } from '@/lib/kb';
-import type { Message } from '@/lib/types';
+import type { Message, Entity } from '@/lib/types';
 
 export interface ChatState {
   messages: Message[];
@@ -15,25 +15,32 @@ export async function sendMessage(
   formData: FormData
 ): Promise<ChatState> {
   const userInput = formData.get('message') as string;
+  const selectedEntity = formData.get('entity') as Entity | null;
 
   if (!userInput?.trim()) {
     return state;
   }
 
-  const userMessageContent = userInput;
-
   const userMessage: Message = {
     id: crypto.randomUUID(),
     role: 'user',
-    content: userMessageContent,
+    content: userInput,
   };
 
   const messagesWithUser = [...state.messages, userMessage];
 
   try {
-    const { entity } = await detectCompanyEntity({ text: userMessageContent });
+    let entity: Entity;
+    let retrievedContent: string | undefined;
 
-    const retrievedContent = knowledgeBase[entity] || knowledgeBase['Groupe ICC Net'];
+    if (selectedEntity && selectedEntity !== 'Unknown') {
+      entity = selectedEntity;
+      retrievedContent = knowledgeBase[entity];
+    } else {
+      const detectionResult = await detectCompanyEntity({ text: userInput });
+      entity = detectionResult.entity;
+      retrievedContent = knowledgeBase[entity] || knowledgeBase['Groupe ICC Net'];
+    }
 
     if (!retrievedContent) {
       const errorMessage: Message = {
@@ -49,7 +56,7 @@ export async function sendMessage(
 
     const { response } = await generateContextualResponse({
       entity: entity,
-      query: userMessageContent,
+      query: userInput,
       retrievedContent: retrievedContent,
     });
 

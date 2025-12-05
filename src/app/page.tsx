@@ -6,27 +6,39 @@ import { ChatHeader } from '@/components/chat/chat-header';
 import { ChatMessages } from '@/components/chat/chat-messages';
 import { ChatInput } from '@/components/chat/chat-input';
 import ChatSidebar from '@/components/chat/chat-sidebar';
-import {
-  SidebarProvider,
-  SidebarInset,
-} from '@/components/ui/sidebar';
+import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect } from 'react';
+import { useEffect, useState, useTransition } from 'react';
+import type { Entity } from '@/lib/types';
 
 const initialState: ChatState = {
-  messages: [
-    {
-      id: 'init',
-      role: 'assistant',
-      content:
-        "Bonjour! Je suis l'assistant virtuel du Groupe ICC. Comment puis-je vous aider aujourd'hui?",
-    },
-  ],
+  messages: [],
 };
 
 export default function Home() {
   const { toast } = useToast();
   const [state, formAction] = useActionState(sendMessage, initialState);
+  const [isPending, startTransition] = useTransition();
+  const [selectedEntity, setSelectedEntity] = useState<Entity>('Groupe ICC Net');
+
+  const initialMessages = [
+    {
+      id: 'init',
+      role: 'assistant' as const,
+      content:
+        `Bonjour! Je suis l'assistant virtuel de ${selectedEntity}. Comment puis-je vous aider aujourd'hui?`,
+    },
+  ];
+
+  const chatState = state.messages.length > 0 ? state : { ...initialState, messages: initialMessages };
+
+   useEffect(() => {
+    // When selectedEntity changes, we want to reset the chat.
+    // We can do this by updating the state's messages.
+    // A more robust solution might involve a key on the chat components or a dedicated reset action.
+    state.messages = [];
+  }, [selectedEntity, state]);
+
 
   useEffect(() => {
     if (state.error) {
@@ -40,15 +52,22 @@ export default function Home() {
 
   return (
     <SidebarProvider>
-      <ChatSidebar />
+      <ChatSidebar
+        selectedEntity={selectedEntity}
+        setSelectedEntity={setSelectedEntity}
+      />
       <SidebarInset className="h-svh flex flex-col">
         <form
-          action={formAction}
+          action={(formData) => {
+            startTransition(() => {
+              formAction(formData);
+            });
+          }}
           className="flex flex-col h-full overflow-hidden"
         >
-          <ChatHeader />
-          <ChatMessages messages={state.messages} />
-          <ChatInput />
+          <ChatHeader selectedEntity={selectedEntity} />
+          <ChatMessages messages={chatState.messages} />
+          <ChatInput isPending={isPending} selectedEntity={selectedEntity} />
         </form>
       </SidebarInset>
     </SidebarProvider>

@@ -10,10 +10,18 @@ import {
   SidebarGroup,
   SidebarGroupLabel,
 } from '@/components/ui/sidebar';
-import { entities } from '@/lib/types';
+import { entities, type Entity } from '@/lib/types';
 import { Logo } from '@/components/icons';
 
-export default function ChatSidebar() {
+interface ChatSidebarProps {
+  selectedEntity: Entity;
+  setSelectedEntity: (entity: Entity) => void;
+}
+
+export default function ChatSidebar({
+  selectedEntity,
+  setSelectedEntity,
+}: ChatSidebarProps) {
   return (
     <Sidebar collapsible="icon" className="border-r">
       <SidebarHeader>
@@ -42,16 +50,12 @@ export default function ChatSidebar() {
                       ),
                       className: 'w-48',
                     }}
-                    asChild
+                    onClick={() => setSelectedEntity(entity.name)}
+                    isActive={selectedEntity === entity.name}
+                    aria-label={entity.name}
                   >
-                    <a
-                      href="#"
-                      onClick={(e) => e.preventDefault()}
-                      aria-label={entity.name}
-                    >
-                      <Icon className="h-4 w-4" />
-                      <span>{entity.name}</span>
-                    </a>
+                    <Icon className="h-4 w-4" />
+                    <span>{entity.name}</span>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
