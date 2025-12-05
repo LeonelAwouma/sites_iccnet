@@ -26,9 +26,9 @@ Entités du groupe:
 - Matrix Telecoms: Solutions de connectivité et télécoms.
 - ICC SOFT: Ingénierie logicielle et développement sur mesure.
 - Newtelnet: Fournisseur d'accès Internet et services VoIP.
-- ADAC: Hébergement et services de data center.
-- LVB & Perle: Branches offrant des services généraux et des solutions personnalisées.`,
-  LVB: `LVB est une branche du Groupe ICC Net qui offre une gamme variée de services généraux aux entreprises. Notre objectif est de fournir un support complet pour aider nos clients à se concentrer sur leur cœur de métier.`,
+- ADAC (Africa Datacenter): Hébergement et services de data center.
+- LVB (La Vallée de BANA) & Perle: Branches offrant des services généraux et des solutions personnalisées.`,
+  LVB: `LVB (La Vallée de BANA) est une branche du Groupe ICC Net qui offre une gamme variée de services généraux aux entreprises. Notre objectif est de fournir un support complet pour aider nos clients à se concentrer sur leur cœur de métier.`,
   Perle: `Perle est une autre entité du Groupe ICC Net, spécialisée dans des solutions d'entreprise personnalisées. Nous nous engageons à fournir l'excellence et l'innovation dans tous nos projets.`,
   Unknown: `Le Groupe ICC NET, avec plus de 15 années d’expérience, est le partenaire de confiance des entreprises camerounaises pour leur transformation digitale. Nous regroupons plusieurs entités spécialisées comme Matrix, ICC SOFT et Newtelnet pour offrir une gamme complète de services informatiques et télécoms.`,
 };
