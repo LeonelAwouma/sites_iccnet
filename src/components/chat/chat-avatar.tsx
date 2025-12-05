@@ -20,10 +20,8 @@ export function ChatAvatar({
     );
   }
   return (
-    <Avatar className={cn('border border-primary', className)}>
-      <AvatarFallback className="bg-primary text-primary-foreground">
-        <Logo className="h-5 w-5" />
-      </AvatarFallback>
+    <Avatar className={cn('p-1 border-primary', className)}>
+      <Logo className="h-full w-full" />
     </Avatar>
   );
 }
