@@ -7,6 +7,7 @@ import {
   LvbIcon,
   PerleIcon,
   Logo,
+  CcecIcon,
 } from '@/components/icons';
 
 export type Message = {
@@ -23,6 +24,7 @@ export type Entity =
   | 'New Telnet'
   | 'ADAC'
   | 'Groupe ICC Net'
+  | 'CCEC'
   | 'Unknown';
 
 export const entities: {
@@ -54,6 +56,11 @@ export const entities: {
     name: 'ADAC',
     description: 'Africa Datacenter',
     icon: AdacIcon,
+  },
+  {
+    name: 'CCEC',
+    description: 'Microfinance',
+    icon: CcecIcon,
   },
   {
     name: 'LVB',
