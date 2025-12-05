@@ -1,6 +1,6 @@
 'use client';
 
-import { useFormState } from 'react-dom';
+import { useActionState } from 'react';
 import { sendMessage, type ChatState } from '@/app/actions';
 import { ChatHeader } from '@/components/chat/chat-header';
 import { ChatMessages } from '@/components/chat/chat-messages';
@@ -26,7 +26,7 @@ const initialState: ChatState = {
 
 export default function Home() {
   const { toast } = useToast();
-  const [state, formAction] = useFormState(sendMessage, initialState);
+  const [state, formAction] = useActionState(sendMessage, initialState);
 
   useEffect(() => {
     if (state.error) {
