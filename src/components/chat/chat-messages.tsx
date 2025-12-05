@@ -17,14 +17,21 @@ const TypingIndicator = () => (
 
 export function ChatMessages({ messages }: { messages: Message[] }) {
   const { pending } = useFormStatus();
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    const scrollToBottom = () => {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+    // We delay the scroll slightly to allow the new message to be rendered first
+    const timeoutId = setTimeout(scrollToBottom, 100);
+    return () => clearTimeout(timeoutId);
   }, [messages, pending]);
 
+
   return (
-    <ScrollArea className="flex-1">
+    <ScrollArea className="flex-1" ref={scrollAreaRef}>
       <div className="p-4 md:p-6 space-y-6">
         {messages.map((message) => (
           <div
