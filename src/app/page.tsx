@@ -8,45 +8,47 @@ import { ChatInput } from '@/components/chat/chat-input';
 import ChatSidebar from '@/components/chat/chat-sidebar';
 import { SidebarProvider, SidebarInset } from '@/components/ui/sidebar';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useState, useTransition } from 'react';
+import { useEffect, useState } from 'react';
 import type { Entity } from '@/lib/types';
+import type { Message } from '@/lib/types';
 
-const initialState: ChatState = {
-  messages: [],
-};
+const createInitialMessage = (entity: Entity): Message => ({
+  id: 'init',
+  role: 'assistant',
+  content: `Bonjour! Je suis l'assistant virtuel de ${entity}. Comment puis-je vous aider aujourd'hui?`,
+});
 
 export default function Home() {
   const { toast } = useToast();
-  const [state, formAction, isPending] = useActionState(sendMessage, initialState);
   const [selectedEntity, setSelectedEntity] = useState<Entity>('Groupe ICC Net');
 
-  // We need a separate state for messages derived from the action state
-  // to properly handle resets when the entity changes.
+  // Create a memoized initial state
+  const initialState: ChatState = {
+    messages: [createInitialMessage(selectedEntity)],
+  };
+
+  const [state, formAction, isPending] = useActionState(sendMessage, initialState);
+
+  // When the entity changes, we need to reset the action state.
+  // A key change on the form is the React way to reset the state of the form and its children.
+  const [formKey, setFormKey] = useState(selectedEntity);
   const [displayMessages, setDisplayMessages] = useState(initialState.messages);
 
-  const createInitialMessage = (entity: Entity) => [
-    {
-      id: 'init',
-      role: 'assistant' as const,
-      content: `Bonjour! Je suis l'assistant virtuel de ${entity}. Comment puis-je vous aider aujourd'hui?`,
-    },
-  ];
-
   useEffect(() => {
-    // When the entity changes, reset the chat and show the initial message for the new entity.
-    setDisplayMessages(createInitialMessage(selectedEntity));
-    // We also need to reset the action state, but useActionState doesn't have a built-in reset.
-    // The best way to signal a "reset" to the action is to handle it on the next message send.
+    // When the selected entity changes, update the key on the form to reset the action state,
+    // and update the displayed messages to show the initial message for the new entity.
+    setFormKey(selectedEntity);
+    setDisplayMessages([createInitialMessage(selectedEntity)]);
   }, [selectedEntity]);
 
   useEffect(() => {
     // When the action state updates with new messages, update our display messages.
-    // Don't update if it's the initial empty state.
-    if (state.messages.length > 0) {
-      setDisplayMessages(state.messages);
-    } else {
-       // This handles the case where the state is reset after an entity change.
-       setDisplayMessages(createInitialMessage(selectedEntity));
+    if (state.messages.length > displayMessages.length || (state.messages.length === 1 && displayMessages.length > 1) ) {
+       setDisplayMessages(state.messages);
+    } else if (state.messages.length === 1 && displayMessages.length === 1 && state.messages[0].content !== displayMessages[0].content){
+        // This case handles the very first message after an entity change.
+        // The state would have been reset, so we show the user message and the new assistant message.
+        setDisplayMessages(state.messages);
     }
   }, [state.messages]);
 
@@ -71,9 +73,7 @@ export default function Home() {
       <SidebarInset className="h-svh flex flex-col">
         <form
           action={formAction}
-          // Using a key that changes with the entity will force React to re-create
-          // the form, ensuring the action state is reset correctly on entity change.
-          key={selectedEntity}
+          key={formKey} // Changing the key resets the useActionState
           className="flex flex-col h-full overflow-hidden"
         >
           <ChatHeader selectedEntity={selectedEntity} />
